@@ -27,9 +27,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/bootstrap.min.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css"
             ],
-            "scripts": []
+            "scripts": ["src/assets/js/jquery-3.2.1.slim.min.js",
+            "src/assets/js/popper-1.12.9.js",
+            "src/assets/js/bootstrap-4.0.0.min.js"]
           },
           "configurations": {
             "production": {

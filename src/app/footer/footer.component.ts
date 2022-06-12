@@ -7,4 +7,5 @@ import { Component } from "@angular/core";
 })
 export class FooterComponent {
     public autor: any = {nombre:"Alexander",apellido:"Peña"}; //generico
+    aviable:boolean = true;
 }
