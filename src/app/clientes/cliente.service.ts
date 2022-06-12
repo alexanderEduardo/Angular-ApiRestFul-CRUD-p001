@@ -5,7 +5,7 @@ import { CLIENTES } from './clientes.json';
 import { Observable,throwError } from 'rxjs';
 import { of } from 'rxjs';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
-import { map,catchError } from 'rxjs';
+import { map,catchError,tap } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -39,6 +39,11 @@ export class ClienteService {
       })
     );  */
     return this.http.get(this.urlEndPoint).pipe(
+      tap(res =>{
+        console.log('tap 1');
+        let clientes = res as Cliente[]; //aca tengo que convertir ya que res es de tipo Object 
+        clientes.forEach( c => console.log(c.nombre))
+      }),
       map( response => {
         let clientes=response as Cliente[];
         return clientes.map( c=>{
@@ -49,6 +54,10 @@ export class ClienteService {
           //c.createAt = datePipe.transform(c.createAt,'fullDate')|| c.createAt;
           return c;
         })
+      }),
+      tap(res =>{ //aca el res ya es de tipo cliente por el map
+        console.log('tap 2');
+        res.forEach( c => console.log(c.nombre))
       })
       //map( function(res) { return res as Cliente[]})
     );
@@ -59,9 +68,11 @@ export class ClienteService {
       catchError( e => {
         
         if(e.status == 400){
-          return throwError(()=>e);
+          return throwError(()=>{return e});
         }
-
+        // ya no ejecuta a apartir de line 73 porque el status error va ser 400 siempre ya que tenemos en
+        // spring todas las validaciones con anotaciones por ende la unica manera de que pase esta linea es 
+        //que ocurra un error (sql exception ) que no sea leido por el BindingResult de Spring   
         swal("Error al crear el cliente",e.error.message,"error");
         return throwError(()=>e);
       })
@@ -97,8 +108,10 @@ export class ClienteService {
   delete(id:number) : Observable<Cliente>{
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`,{headers:this.httpHeaders}).pipe(
       catchError( e => {
+        if(e.status == 500){
+          return throwError(()=>{return e});
+        }
         swal("Error al eliminar",e.error.message,"error");
-        
         return throwError( () => e );
       }
       )

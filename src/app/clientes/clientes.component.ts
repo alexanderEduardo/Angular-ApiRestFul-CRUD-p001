@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import swal from 'sweetalert2';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-clientes',
@@ -26,8 +27,14 @@ export class ClientesComponent implements OnInit {
   // Este evento es cuando se inicializa el componente
   //Aca cada vez que detecte cambios en el bd se actualiza e invoca el metodo 
   ngOnInit(): void {
-     this.clienteService.getClientes().subscribe(
-        clientes => {this.clientes = clientes;
+     this.clienteService.getClientes().pipe(
+      tap( cl => {
+         let cL:Cliente[] =[];
+       cl.forEach( c => cL.push(c) );   
+      console.log(cL);
+      })
+     ).subscribe(
+        clientes => {this.clientes = clientes; //esta linea podria ir perfectamente en el tap y el subscribe vacio
          console.warn("getClientes() 200");} //no es necesario un return puede ser void 
      );
   }
