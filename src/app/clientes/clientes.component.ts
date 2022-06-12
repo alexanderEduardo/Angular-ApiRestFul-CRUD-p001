@@ -50,13 +50,20 @@ export class ClientesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
          this.clienteService.delete(cliente.id).subscribe(
-            res => {
-               this.clientes=this.clientes.filter(c => c != cliente);
-               swal(
-                  'Cliente Eliminado!',
-                  `El cliente ${cliente.nombre} ha sido eliminado con exito`,
-                  'success'
-                )
+            {
+               next:(res) => {
+                  this.clientes=this.clientes.filter(c => c != cliente);
+                  swal(
+                     'Cliente Eliminado!',
+                     `El cliente ${cliente.nombre} ha sido eliminado con exito`,
+                     'success')                     
+               },
+               error:(er)=>{
+                  swal("Error al eliminar",er.error.message,"error");
+                  this.clienteService.getClientes().subscribe( cls =>{
+                     this.clientes=cls;
+                  })
+               }
             }
          );
          
@@ -76,7 +83,7 @@ export class ClientesComponent implements OnInit {
           }).then((result) => {
             if (result.value) {
                this.clienteService.deleteAll().subscribe(
-                  res =>{
+                  res =>{ 
                      console.warn(res);
                      this.clientes=res;
                      swal(

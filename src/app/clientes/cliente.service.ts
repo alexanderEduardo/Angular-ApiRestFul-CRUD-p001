@@ -111,6 +111,7 @@ export class ClienteService {
         if(e.status == 500){
           return throwError(()=>{return e});
         }
+        //No llega a esta linea ya que spring me devuelve solo status 500 en caso de error
         swal("Error al eliminar",e.error.message,"error");
         return throwError( () => e );
       }
