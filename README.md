@@ -1,3 +1,7 @@
+# Resumen del Proyecto de Angular
+
+Este proyecto basado en angular que esta en una arquictectura cliente-servidor(Apir RestFul). Donde mi app de angular consume mi api basada en springboot (https://github.com/alexanderEduardo/SpringBoot-ApiRestFul-CRUD-p001)
+
 # AngularInitProyect
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
