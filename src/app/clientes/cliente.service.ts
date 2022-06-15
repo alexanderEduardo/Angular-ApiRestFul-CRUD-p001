@@ -16,7 +16,7 @@ import swal from 'sweetalert2';
 export class ClienteService {
   constructor(private http:HttpClient,private router:Router) { }
   
-  private urlEndPoint : string = "http://localhost:8090/api/clientes";
+  private urlEndPoint : string = "https://spring-api-restful.herokuapp.com/api/clientes";
   private httpHeaders : HttpHeaders = new HttpHeaders({'Content-Type':'application/json'});
 
   //Basicamente implemento Observable para que a la hora de hacer peticiones rest la bd se actuliza 
