@@ -5,11 +5,11 @@ const path = require('path');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/angular-springboot-restful'));
+app.use(express.static('./dist/angular-springboot-restful'));
 
 app.get('/*', function(req,res) {
     
-res.sendFile(path.join(__dirname+'/dist/angular-springboot-restful/index.html'));
+res.sendFile('index.html',{root: 'dist/angular-springboot-restful'});
 });
 
 // Start the app by listening on the default Heroku port
