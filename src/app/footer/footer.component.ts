@@ -6,6 +6,6 @@ import { Component } from "@angular/core";
     styleUrls:['./footer.component.css']
 })
 export class FooterComponent {
-    public autor: any = {nombre:"Alexander",apellido:"Peña"}; //generico
+    public autor: any = {nombre:"Alexander Eduardo",apellido:"Peña Halanoca"}; //generico
     aviable:boolean = true;
 }
